@@ -1,15 +1,18 @@
-import dev.fritz2.binding.storeOf
+import data.entity.TEST_CHARACTER
 import dev.fritz2.dom.html.render
-import kotlinx.coroutines.flow.map
-import model.Framework
+import kotlinx.coroutines.flow.flowOf
 
 fun main() {
-    val frameworkStore = storeOf(Framework("fritz2"))
-
     render {
-        p {
-            +"This site uses: "
-            b { frameworkStore.data.map { it.name }.asText() }
-        }
+        tableCharactersStats(
+            flowOf(
+                listOf(
+                    TEST_CHARACTER,
+                    TEST_CHARACTER,
+                    TEST_CHARACTER,
+                    TEST_CHARACTER
+                )
+            )
+        )
     }
 }

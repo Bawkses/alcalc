@@ -1,0 +1,1 @@
+var game_data = {"characters:": [{"name": "Test Char", "health": 2000, "evasion": 200}]}

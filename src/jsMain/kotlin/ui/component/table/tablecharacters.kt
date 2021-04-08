@@ -1,8 +1,10 @@
+package ui.component.table
+
 import data.entity.AbsCharacter
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.flow.Flow
 
-fun RenderContext.tableCharactersStats(
+fun RenderContext.tableCharacters(
     characters: Flow<List<AbsCharacter>>
 ) {
     table {

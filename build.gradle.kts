@@ -1,3 +1,5 @@
+// https://kotlinlang.org/docs/js-project-setup.html
+
 plugins {
     id("dev.fritz2.fritz2-gradle") version "0.9.1"
 }

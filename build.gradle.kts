@@ -1,6 +1,8 @@
 // https://kotlinlang.org/docs/js-project-setup.html
 
 plugins {
+    id("org.jetbrains.kotlin.multiplatform") version "1.4.30"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.4.30"
     id("dev.fritz2.fritz2-gradle") version "0.9.1"
 }
 
@@ -10,7 +12,8 @@ repositories {
 
 kotlin {
     jvm()
-    js(IR) {
+    // todo: having issues with IR backend
+    js(LEGACY) {
         browser()
     }.binaries
         .executable()
@@ -19,8 +22,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("dev.fritz2:core:0.9.1")
-                // see https://components.fritz2.dev/
-                // implementation("dev.fritz2:components:0.9.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
             }
         }
         val jvmMain by getting {

@@ -1,21 +1,22 @@
-import data.entity.TEST_CHARACTER
+import data.repository.CharacterRepository
+import data.source.azurapi.AzurApiSourceImpl
 import dev.fritz2.dom.html.render
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flow
 import ui.component.table.tableCharacters
 
 fun main() {
-    console.log(game_data)
+    val characterRepository = CharacterRepository(
+        azurApiSource = AzurApiSourceImpl()
+    )
 
     render {
         tableCharacters(
-            flowOf(
-                listOf(
-                    TEST_CHARACTER,
-                    TEST_CHARACTER,
-                    TEST_CHARACTER,
-                    TEST_CHARACTER
+            flow {
+                emit(
+                    characterRepository
+                        .retrieveCharacters()
                 )
-            )
+            }
         )
     }
 }

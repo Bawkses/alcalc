@@ -1,15 +1,17 @@
 package ui.component.table
 
-import data.entity.AbsCharacter
+import data.entity.Character
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.flow.Flow
 
 fun RenderContext.tableCharacters(
-    characters: Flow<List<AbsCharacter>>
+    characters: Flow<List<Character>>
 ) {
     table {
         thead {
             tr {
+                th { +"id" }
+                th { +"type" }
                 th { +"name" }
                 th { +"hp" }
                 th { +"ev" }
@@ -20,7 +22,18 @@ fun RenderContext.tableCharacters(
             characters
                 .renderEach { character ->
                     tr {
-                        th { +character.name }
+                        td {
+                            a {
+                                href(character.wikiUrl)
+                                +character.wikiId
+                            }
+                        }
+                        td { +character.hullType.symbol }
+                        td {
+                            +character.hullName
+                            br {}
+                            small { +"(${character.hullClass})" }
+                        }
                         td { +"${character.health}" }
                         td { +"${character.evasion}" }
                         td { +"${character.effectiveHealth}" }

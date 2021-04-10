@@ -1,13 +1,15 @@
 package data.entity
 
 data class Character(
-    override val name: String,
-    override val health: Int,
-    override val evasion: Int
-) : AbsCharacter()
+    val wikiId: String,
+    val wikiUrl: String,
+    val hullName: String,
+    val hullClass: String,
+    val hullType: HullType,
+    val health: Int,
+    val evasion: Int
+) {
 
-val TEST_CHARACTER = Character(
-    name = "Test Char",
-    health = 2000,
-    evasion = 200
-)
+    val effectiveHealth
+        get() = health * evasion // todo
+}

@@ -1,6 +1,7 @@
 package ui.component.table
 
 import data.entity.Character
+import data.entity.effectiveHealth
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.flow.Flow
 
@@ -13,9 +14,11 @@ fun RenderContext.tableCharacters(
                 th { +"id" }
                 th { +"type" }
                 th { +"name" }
+                th { +"eHP " }
                 th { +"hp" }
                 th { +"ev" }
-                th { +"effHp" }
+                th { +"acc" }
+                th { +"luck" }
             }
         }
         tbody {
@@ -34,9 +37,11 @@ fun RenderContext.tableCharacters(
                             br {}
                             small { +"(${character.hullClass})" }
                         }
+                        td { +"${character.effectiveHealth()}" }
                         td { +"${character.health}" }
                         td { +"${character.evasion}" }
-                        td { +"${character.effectiveHealth}" }
+                        td { +"${character.accuracy}" }
+                        td { +"${character.luck}" }
                     }
                 }
         }

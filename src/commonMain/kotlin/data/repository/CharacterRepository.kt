@@ -54,7 +54,9 @@ class CharacterRepository(
                 hullClass = it.hullClass,
                 hullType = hullType,
                 health = it.stats.values.health,
-                evasion = it.stats.values.evasion
+                evasion = it.stats.values.evasion,
+                accuracy = it.stats.values.accuracy,
+                luck = it.stats.values.luck
             ) else
                 null
         }

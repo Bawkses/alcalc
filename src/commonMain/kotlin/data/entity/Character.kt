@@ -6,10 +6,8 @@ data class Character(
     val hullName: String,
     val hullClass: String,
     val hullType: HullType,
-    val health: Int,
-    val evasion: Int
-) {
-
-    val effectiveHealth
-        get() = health * evasion // todo
-}
+    override val health: Int,
+    override val evasion: Int,
+    override val accuracy: Int,
+    override val luck: Int
+): CharaStats()

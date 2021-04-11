@@ -62,9 +62,8 @@ class CharacterRepository(
         }
         .filterNotNull()
         .sortedWith { a, b ->
-            // todo hullType ordering
-            a.hullType.symbol
-                .compareTo(b.hullType.symbol)
+            a.hullType
+                .compareTo(b.hullType)
                 .let { symbolComparison ->
                     // lazy but works; wiki ids are weird and not numerical
                     if (symbolComparison == 0) a.wikiId.length

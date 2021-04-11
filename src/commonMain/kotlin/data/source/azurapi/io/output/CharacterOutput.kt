@@ -16,7 +16,7 @@ data class CharacterOutput(
     @SerialName("names")
     val name: TranslatedStringOutput,
     @SerialName("nationality")
-    val nationality: String,
+    val faction: String,
     @SerialName("hullType")
     val hullType: String,
     @SerialName("retrofitHullType")

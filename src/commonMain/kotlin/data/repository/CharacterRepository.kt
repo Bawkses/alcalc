@@ -1,8 +1,10 @@
 package data.repository
 
 import data.entity.Character
+import data.entity.Faction
 import data.entity.HullType
 import data.source.azurapi.AzurApiSource
+import kotlinx.serialization.SerialName
 
 class CharacterRepository(
     private val azurApiSource: AzurApiSource
@@ -35,6 +37,7 @@ class CharacterRepository(
                             hullName = output.name.value,
                             hullClass = output.hullClass,
                             hullType = hullType,
+                            faction = output.faction.toFaction(),
                             isRetrofitted = false,
                             health = output.stats.values.health,
                             evasion = output.stats.values.evasion,
@@ -50,6 +53,7 @@ class CharacterRepository(
                             hullName = output.name.value,
                             hullClass = output.hullClass,
                             hullType = hullTypeRetrofit!!,
+                            faction = output.faction.toFaction(),
                             isRetrofitted = true,
                             health = output.stats.values.health,
                             evasion = output.stats.values.evasion,
@@ -63,18 +67,23 @@ class CharacterRepository(
         .sortedWith { a, b ->
             a.hullType
                 .compareTo(b.hullType)
-                .let { symbolComparison ->
-                    // lazy but works; wiki ids are weird and not numerical
-                    if (symbolComparison == 0) a.wikiId.length
-                        .compareTo(b.wikiId.length)
-                        .let { idLengthComparison ->
-                            if (idLengthComparison == 0) a.wikiId
-                                .compareTo(b.wikiId)
+                .let { hullTypeComparison ->
+                    if (hullTypeComparison == 0) a.faction
+                        .compareTo(b.faction)
+                        .let { factionComparison ->
+                            if (factionComparison == 0) a.hullClass
+                                .compareTo(b.hullClass)
+                                .let { hullClassComparison ->
+                                    if (hullClassComparison == 0) a.hullName
+                                        .compareTo(b.hullName)
+                                    else
+                                        hullClassComparison
+                                }
                             else
-                                idLengthComparison
+                                factionComparison
                         }
                     else
-                        symbolComparison
+                        hullTypeComparison
                 }
         }
         .toList()
@@ -110,5 +119,28 @@ class CharacterRepository(
             .FrontLine.MunitionShip
         else ->
             null
+    }
+
+    private fun String.toFaction() = when (this) {
+        "Sakura Empire" -> Faction
+            .SAKURA_EMPIRE
+        "Eagle Union" -> Faction
+            .EAGLE_UNION
+        "Royal Navy" -> Faction
+            .ROYAL_NAVY
+        "Iron Blood" -> Faction
+            .IRON_BLOOD
+        "Dragon Empery" -> Faction
+            .DRAGON_EMPERY
+        "Northern Parliament" -> Faction
+            .NORTHERN_PARLIAMENT
+        "Iris Libre" -> Faction
+            .IRIS_LIBRE
+        "Vichya Dominion" -> Faction
+            .VICHYA__DOMINION
+        "Sardegna Empire" -> Faction
+            .SARDEGNA_EMPIRE
+        else -> Faction
+            .OTHER
     }
 }

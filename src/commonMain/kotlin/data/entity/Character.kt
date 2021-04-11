@@ -6,6 +6,7 @@ data class Character(
     val hullName: String,
     val hullClass: String,
     val hullType: HullType,
+    val faction: Faction,
     val isRetrofitted: Boolean,
     override val health: Int,
     override val evasion: Int,

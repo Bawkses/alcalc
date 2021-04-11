@@ -11,8 +11,8 @@ fun RenderContext.tableCharacters(
     table {
         thead {
             tr {
-                th { +"id" }
                 th { +"type" }
+                th { +"faction" }
                 th { +"class" }
                 th { +"name" }
                 th { +"eHP " }
@@ -26,16 +26,14 @@ fun RenderContext.tableCharacters(
             characters
                 .renderEach { character ->
                     tr {
+                        td { +character.hullType.symbol }
+                        td { +character.faction.name }
+                        td { +character.hullClass }
                         td {
                             a {
                                 href(character.wikiUrl)
-                                +character.wikiId
+                                +character.hullName
                             }
-                        }
-                        td { +character.hullType.symbol }
-                        td { +character.hullClass }
-                        td {
-                            +character.hullName
                             if (character.isRetrofitted)
                                 small { +" (Retrofit)" }
                         }

@@ -53,7 +53,7 @@ sealed class HullType {
         }
 
         object AviationBattleship : BackLine() {
-            override val symbol: String = "BB" // ??
+            override val symbol: String = "ABB" // ??
             override val defaultOrder: Int = 10
         }
 

@@ -13,6 +13,7 @@ fun RenderContext.tableCharacters(
             tr {
                 th { +"id" }
                 th { +"type" }
+                th { +"class" }
                 th { +"name" }
                 th { +"eHP " }
                 th { +"hp" }
@@ -32,10 +33,11 @@ fun RenderContext.tableCharacters(
                             }
                         }
                         td { +character.hullType.symbol }
+                        td { +character.hullClass }
                         td {
                             +character.hullName
-                            br {}
-                            small { +"(${character.hullClass})" }
+                            if (character.isRetrofitted)
+                                small { +" (Retrofit)" }
                         }
                         td { +"${character.effectiveHealth()}" }
                         td { +"${character.health}" }

@@ -5,8 +5,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CharacterOutput(
+    @SerialName("retrofit")
+    val hasRetrofit: Boolean = false,
     @SerialName("id")
     val wikiId: String,
+    @SerialName("retrofitId")
+    val wikiRetrofitId: String? = null,
     @SerialName("wikiUrl")
     val wikiUrl: String,
     @SerialName("names")
@@ -15,6 +19,8 @@ data class CharacterOutput(
     val nationality: String,
     @SerialName("hullType")
     val hullType: String,
+    @SerialName("retrofitHullType")
+    val hullTypeRetrofit: String? = null,
     @SerialName("class")
     val hullClass: String,
     @SerialName("thumbnail")
@@ -31,7 +37,9 @@ data class CharacterOutput(
     @Serializable
     data class Stats(
         @SerialName("level120")
-        val values: Values
+        val values: Values,
+        @SerialName("level120Retrofit")
+        val valuesAfterRetrofit: Values? = null
     ) {
         @Serializable
         data class Values(

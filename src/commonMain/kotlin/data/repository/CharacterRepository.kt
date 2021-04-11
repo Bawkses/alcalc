@@ -10,57 +10,56 @@ class CharacterRepository(
     suspend fun retrieveCharacters(): List<Character> = azurApiSource
         .retrieveCharacters()
         .asSequence()
-        .map {
-            val hullType = when (it.hullType) {
-                "Destroyer" -> HullType
-                    .FrontLine.Destroyer
-                "Light Cruiser" -> HullType
-                    .FrontLine.LightCruiser
-                "Heavy Cruiser" -> HullType
-                    .FrontLine.HeavyCruiser
-                "Large Cruiser" -> HullType
-                    .FrontLine.LargeCruiser
-                "Monitor" -> HullType
-                    .BackLine.Monitor
-                "Battlecruiser" -> HullType
-                    .BackLine.Battlecruiser
-                "Battleship" -> HullType
-                    .BackLine.Battleship
-                "Aviation Battleship" -> HullType
-                    .BackLine.AviationBattleship
-                "Light Carrier" -> HullType
-                    .BackLine.LightAircraftCarrier
-                "Aircraft Carrier" -> HullType
-                    .BackLine.AircraftCarrier
-                "Submarine" -> HullType
-                    .Submarine.Default
-                "Submarine Carrier" -> HullType
-                    .Submarine.AircraftCarrier
-                "Repair" -> HullType
-                    .FrontLine.Repair
-                // does not exist; is returned as destroyer
-                "Munition Ship" -> HullType
-                    .FrontLine.MunitionShip
-                else -> if (it.name.value == "Kashino") HullType
-                    .FrontLine.MunitionShip
-                else
-                    null
-            }
+        .flatMap { output ->
+            sequence {
+                val hullType = output.hullType
+                    .toHullType()
+                    ?.let {
+                        // does not exist; is returned as destroyer
+                        if (output.name.value == "Kashino") HullType
+                            .FrontLine.MunitionShip
+                        else
+                            it
+                    }
 
-            if (hullType != null) Character(
-                wikiId = it.wikiId,
-                wikiUrl = it.wikiUrl,
-                hullName = it.name.value,
-                hullClass = it.hullClass,
-                hullType = hullType,
-                health = it.stats.values.health,
-                evasion = it.stats.values.evasion,
-                accuracy = it.stats.values.accuracy,
-                luck = it.stats.values.luck
-            ) else
-                null
+                val hullTypeRetrofit = output.hullTypeRetrofit
+                    ?.toHullType()
+
+                if (hullType != null) {
+                    if (!output.hasRetrofit ||
+                        output.hasRetrofit && hullType != hullTypeRetrofit
+                    ) yield(
+                        Character(
+                            wikiId = output.wikiId,
+                            wikiUrl = output.wikiUrl,
+                            hullName = output.name.value,
+                            hullClass = output.hullClass,
+                            hullType = hullType,
+                            isRetrofitted = false,
+                            health = output.stats.values.health,
+                            evasion = output.stats.values.evasion,
+                            accuracy = output.stats.values.accuracy,
+                            luck = output.stats.values.luck
+                        )
+                    )
+
+                    if (output.hasRetrofit) yield(
+                        Character(
+                            wikiId = output.wikiRetrofitId!!,
+                            wikiUrl = output.wikiUrl,
+                            hullName = output.name.value,
+                            hullClass = output.hullClass,
+                            hullType = hullTypeRetrofit!!,
+                            isRetrofitted = true,
+                            health = output.stats.values.health,
+                            evasion = output.stats.values.evasion,
+                            accuracy = output.stats.values.accuracy,
+                            luck = output.stats.values.luck
+                        )
+                    )
+                }
+            }
         }
-        .filterNotNull()
         .sortedWith { a, b ->
             a.hullType
                 .compareTo(b.hullType)
@@ -79,4 +78,37 @@ class CharacterRepository(
                 }
         }
         .toList()
+
+    private fun String.toHullType() = when (this) {
+        "Destroyer" -> HullType
+            .FrontLine.Destroyer
+        "Light Cruiser" -> HullType
+            .FrontLine.LightCruiser
+        "Heavy Cruiser" -> HullType
+            .FrontLine.HeavyCruiser
+        "Large Cruiser" -> HullType
+            .FrontLine.LargeCruiser
+        "Monitor" -> HullType
+            .BackLine.Monitor
+        "Battlecruiser" -> HullType
+            .BackLine.Battlecruiser
+        "Battleship" -> HullType
+            .BackLine.Battleship
+        "Aviation Battleship" -> HullType
+            .BackLine.AviationBattleship
+        "Light Carrier" -> HullType
+            .BackLine.LightAircraftCarrier
+        "Aircraft Carrier" -> HullType
+            .BackLine.AircraftCarrier
+        "Submarine" -> HullType
+            .Submarine.Default
+        "Submarine Carrier" -> HullType
+            .Submarine.AircraftCarrier
+        "Repair" -> HullType
+            .FrontLine.Repair
+        "Munition Ship" -> HullType
+            .FrontLine.MunitionShip
+        else ->
+            null
+    }
 }

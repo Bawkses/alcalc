@@ -23,6 +23,8 @@ kotlin {
             dependencies {
                 implementation("dev.fritz2:core:0.9.1")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
+                // https://github.com/LighthouseGames/KmLogging
+                implementation("org.lighthousegames:logging:1.0.0")
             }
         }
         val jvmMain by getting {

@@ -77,7 +77,9 @@ data class CharacterOutput(
         @SerialName("type")
         val type: String,
         @SerialName("maxEfficiency")
-        val efficiency: Int
+        val efficiency: Int,
+        @SerialName("kaiEfficiency")
+        val efficiencyAfterRetrofit: Int? = null
     )
 
     @Serializable

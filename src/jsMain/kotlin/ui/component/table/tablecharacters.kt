@@ -1,6 +1,7 @@
 package ui.component.table
 
 import data.entity.Character
+import data.entity.EquipType
 import data.entity.effectiveHealth
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.flow.Flow
@@ -18,8 +19,12 @@ fun RenderContext.tableCharacters(
                 th { +"eHP " }
                 th { +"hp" }
                 th { +"ev" }
-                th { +"acc" }
                 th { +"luck" }
+                th { +"acc" }
+                th { +"guns?" }
+                th { +"torps?" }
+                th { +"planes?" }
+                th { +"antiair?" }
             }
         }
         tbody {
@@ -40,8 +45,12 @@ fun RenderContext.tableCharacters(
                         td { +"${character.effectiveHealth()}" }
                         td { +"${character.health}" }
                         td { +"${character.evasion}" }
-                        td { +"${character.accuracy}" }
                         td { +"${character.luck}" }
+                        td { +"${character.accuracy}" }
+                        td { +"${character.slots.canHold(EquipType.Gun::class)}" }
+                        td { +"${character.slots.canHold(EquipType.Torpedo::class)}" }
+                        td { +"${character.slots.canHold(EquipType.Plane::class)}" }
+                        td { +"${character.slots.canHold(EquipType.AntiAir::class)}" }
                     }
                 }
         }

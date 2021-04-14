@@ -6,7 +6,14 @@ abstract class CharaStats {
     abstract val health: Int
     abstract val evasion: Int
     abstract val accuracy: Int
+    abstract val reload: Int
+    abstract val firepower: Int
+    abstract val torpedo: Int
+    abstract val aviation: Int
+    abstract val antiAir: Int
+    abstract val antiSub: Int
     abstract val luck: Int
+    abstract val speed: Int
 }
 
 /** Calculates the percentage of am enemy character hitting this character. */

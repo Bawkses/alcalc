@@ -12,5 +12,12 @@ data class Character(
     override val health: Int,
     override val evasion: Int,
     override val accuracy: Int,
-    override val luck: Int
-): CharaStats()
+    override val reload: Int,
+    override val firepower: Int,
+    override val torpedo: Int,
+    override val aviation: Int,
+    override val antiAir: Int,
+    override val antiSub: Int,
+    override val luck: Int,
+    override val speed: Int
+) : CharaStats()

@@ -55,7 +55,14 @@ class CharacterRepository(
                                 health = output.stats.values.health,
                                 evasion = output.stats.values.evasion,
                                 accuracy = output.stats.values.accuracy,
-                                luck = output.stats.values.luck
+                                firepower = output.stats.values.firepower,
+                                torpedo = output.stats.values.torpedo,
+                                aviation = output.stats.values.aviation,
+                                antiAir = output.stats.values.antiAir,
+                                antiSub = output.stats.values.antiSub,
+                                reload = output.stats.values.reload,
+                                luck = output.stats.values.luck,
+                                speed = output.stats.values.speed
                             )
                         )
 
@@ -79,10 +86,17 @@ class CharacterRepository(
                                         faction = output.faction.toFaction(),
                                         isRetrofitted = true,
                                         slots = charaSlotsRetrofit,
-                                        health = output.stats.values.health,
-                                        evasion = output.stats.values.evasion,
-                                        accuracy = output.stats.values.accuracy,
-                                        luck = output.stats.values.luck
+                                        health = output.stats.valuesAfterRetrofit!!.health,
+                                        evasion = output.stats.valuesAfterRetrofit.evasion,
+                                        accuracy = output.stats.valuesAfterRetrofit.accuracy,
+                                        firepower = output.stats.valuesAfterRetrofit.firepower,
+                                        torpedo = output.stats.valuesAfterRetrofit.torpedo,
+                                        aviation = output.stats.valuesAfterRetrofit.aviation,
+                                        antiAir = output.stats.valuesAfterRetrofit.antiAir,
+                                        antiSub = output.stats.valuesAfterRetrofit.antiSub,
+                                        reload = output.stats.valuesAfterRetrofit.reload,
+                                        luck = output.stats.valuesAfterRetrofit.luck,
+                                        speed = output.stats.valuesAfterRetrofit.speed
                                     )
                                 )
                             }

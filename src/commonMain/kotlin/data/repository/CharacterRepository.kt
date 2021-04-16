@@ -205,7 +205,8 @@ class CharacterRepository(
                             outputSlot.efficiency
                         else ->
                             outputSlot.efficiencyAfterRetrofit!!
-                    }
+                    },
+                    quantity = outputSlot.quantity
                 )
             }
         }
@@ -218,7 +219,8 @@ class CharacterRepository(
                 fromIndex = lastNonNullIndex + 1,
                 element = CharaSlots.Value(
                     canHold = setOf(EquipType.Auxiliary),
-                    efficiency = 0
+                    efficiency = 0,
+                    quantity = 1
                 )
             )
 
@@ -243,53 +245,53 @@ class CharacterRepository(
                 null
         } else buildSet {
             if (this@toSlotTypes.contains("DD")) add(
-                EquipType.Gun.Destroyer
+                EquipType.Weapon.Gun.Destroyer
             )
 
             if (this@toSlotTypes.contains("CL")) add(
-                EquipType.Gun.LightCruiser
+                EquipType.Weapon.Gun.LightCruiser
             )
 
             if (this@toSlotTypes.contains("CA")) add(
-                EquipType.Gun.HeavyCruiser
+                EquipType.Weapon.Gun.HeavyCruiser
             )
 
             if (this@toSlotTypes.contains("CB")) add(
-                EquipType.Gun.LargeCruiser
+                EquipType.Weapon.Gun.LargeCruiser
             )
 
             if (this@toSlotTypes.contains("BB")) add(
-                EquipType.Gun.Battleship
+                EquipType.Weapon.Gun.Battleship
             )
 
             if (this@toSlotTypes.contains("Submarine-mounted 203mm Gun")) add(
-                EquipType.Gun.Submarine
+                EquipType.Weapon.Gun.Submarine
             )
 
             if (this@toSlotTypes.contains("Submarine Torpedoes")) add(
-                EquipType.Torpedo.Submarine
+                EquipType.Weapon.Torpedo.Submarine
             ) else if (this@toSlotTypes.contains("Torpedoes")) add(
-                EquipType.Torpedo.Default
+                EquipType.Weapon.Torpedo.Default
             )
 
             if (this@toSlotTypes.contains("Fighters")) add(
-                EquipType.Plane.Fighter
+                EquipType.Weapon.Plane.Fighter
             )
 
             if (this@toSlotTypes.contains("Dive Bombers")) add(
-                EquipType.Plane.DiveBomber
+                EquipType.Weapon.Plane.DiveBomber
             )
 
             if (this@toSlotTypes.contains("Torpedo Bombers")) add(
-                EquipType.Plane.TorpedoBomber
+                EquipType.Weapon.Plane.TorpedoBomber
             )
 
             if (this@toSlotTypes.contains("Seaplanes")) add(
-                EquipType.Plane.Seaplane
+                EquipType.Weapon.Plane.Seaplane
             )
 
             if (this@toSlotTypes.contains("Anti-Air Guns")) add(
-                EquipType.AntiAir
+                EquipType.Weapon.AntiAir
             )
 
             if (this@toSlotTypes.contains("Cargo")) add(

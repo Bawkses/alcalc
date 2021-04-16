@@ -20,4 +20,4 @@ data class Character(
     override val antiSub: Int,
     override val luck: Int,
     override val speed: Int
-) : CharaStats()
+) : CharaStats

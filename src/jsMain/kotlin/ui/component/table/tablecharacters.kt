@@ -2,9 +2,14 @@ package ui.component.table
 
 import data.entity.Character
 import data.entity.EquipType
-import data.entity.effectiveHealth
+import data.util.effectiveHealth
+import data.util.statMultiplierFor
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.flow.Flow
+import util.string.format
+
+// todo use config
+const val showBasicStats = false
 
 fun RenderContext.tableCharacters(
     characters: Flow<List<Character>>
@@ -17,21 +22,25 @@ fun RenderContext.tableCharacters(
                 th { +"class" }
                 th { +"name" }
                 th { +"eHP " }
-                th { +"hp" }
-                th { +"ev" }
+                if (showBasicStats) th { +"hp" }
+                if (showBasicStats) th { +"ev" }
                 th { +"acc" }
                 th { +"rel" }
-                th { +"fire" }
-                th { +"torp" }
-                th { +"avi" }
-                th { +"aa" }
-                th { +"ab" }
+                if (showBasicStats) th { +"fire" }
+                th { +"xDD" }
+                th { +"xCL" }
+                th { +"xCA" }
+                if (showBasicStats) th { +"torp" }
+                th { +"xTorp" }
+                if (showBasicStats) th { +"avi" }
+                th { +"xFight" }
+                th { +"xDivBo" }
+                th { +"xTorBo" }
+                if (showBasicStats) th { +"aa" }
+                th { +"xAA" }
+                if (showBasicStats) th { +"as" }
                 th { +"luck" }
                 th { +"spd" }
-                th { +"guns?" }
-                th { +"torps?" }
-                th { +"planes?" }
-                th { +"antiair?" }
             }
         }
         tbody {
@@ -50,23 +59,58 @@ fun RenderContext.tableCharacters(
                                 small { +" (Retrofit)" }
                         }
                         td { +"${character.effectiveHealth()}" }
-                        td { +"${character.health}" }
-                        td { +"${character.evasion}" }
+                        if (showBasicStats) td { +"${character.health}" }
+                        if (showBasicStats) td { +"${character.evasion}" }
                         td { +"${character.accuracy}" }
                         td { +"${character.reload}" }
-                        td { +"${character.firepower}" }
-                        td { +"${character.torpedo}" }
-                        td { +"${character.aviation}" }
-                        td { +"${character.antiAir}" }
-                        td { +"${character.antiSub}" }
+                        if (showBasicStats) td { +"${character.firepower}" }
+                        td {
+                            +character.statMultiplierFor(EquipType.Weapon.Gun.Destroyer)
+                                .formatStat()
+                        }
+                        td {
+                            +character.statMultiplierFor(EquipType.Weapon.Gun.LightCruiser)
+                                .formatStat()
+                        }
+                        td {
+                            +character.statMultiplierFor(EquipType.Weapon.Gun.HeavyCruiser)
+                                .formatStat()
+                        }
+                        if (showBasicStats) td { +"${character.torpedo}" }
+                        td {
+                            val defTorpedo = character.statMultiplierFor(EquipType.Weapon.Torpedo.Default)
+                            val subTorpedo = character.statMultiplierFor(EquipType.Weapon.Torpedo.Submarine)
+                            +(defTorpedo + subTorpedo)
+                                .formatStat()
+                        }
+                        if (showBasicStats) td { +"${character.aviation}" }
+                        td {
+                            +character.statMultiplierFor(EquipType.Weapon.Plane.Fighter)
+                                .formatStat()
+                        }
+                        td {
+                            +character.statMultiplierFor(EquipType.Weapon.Plane.DiveBomber)
+                                .formatStat()
+                        }
+                        td {
+                            +character.statMultiplierFor(EquipType.Weapon.Plane.TorpedoBomber)
+                                .formatStat()
+                        }
+                        if (showBasicStats) td { +"${character.antiAir}" }
+                        td {
+                            +character.statMultiplierFor(EquipType.Weapon.AntiAir)
+                                .formatStat()
+                        }
+                        if (showBasicStats) td { +"${character.antiSub}" }
                         td { +"${character.luck}" }
                         td { +"${character.speed}" }
-                        td { +"${character.slots.canHold(EquipType.Gun::class)}" }
-                        td { +"${character.slots.canHold(EquipType.Torpedo::class)}" }
-                        td { +"${character.slots.canHold(EquipType.Plane::class)}" }
-                        td { +"${character.slots.canHold(EquipType.AntiAir::class)}" }
                     }
                 }
         }
     }
 }
+
+private fun Float.formatStat() = if (this > 0)
+    "x%.2f".format(this)
+else
+    "-"

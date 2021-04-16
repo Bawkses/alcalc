@@ -19,10 +19,14 @@ data class CharaSlots(
 
     data class Value(
         val canHold: Set<EquipType>,
-        val efficiency: Int
+        val efficiency: Int,
+        val quantity: Int
     ) {
         fun <T : EquipType> canHold(other: KClass<T>) =
             canHold.any { other.isInstance(it) }
+
+        fun canHold(other: EquipType) =
+            canHold.any { it == other }
     }
 
     override fun iterator(): Iterator<Value> = iterator {
@@ -30,5 +34,8 @@ data class CharaSlots(
     }
 
     fun <T : EquipType> canHold(other: KClass<T>) =
+        any { it.canHold(other) }
+
+    fun canHold(other: EquipType) =
         any { it.canHold(other) }
 }

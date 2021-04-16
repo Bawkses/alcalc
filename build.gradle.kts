@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.Mode.*
+
 // https://kotlinlang.org/docs/js-project-setup.html
 
 plugins {
@@ -14,7 +16,11 @@ kotlin {
     jvm()
     // todo: having issues with IR backend
     js(LEGACY) {
-        browser()
+        browser {
+            webpackTask {
+                sourceMaps = (mode == DEVELOPMENT)
+            }
+        }
     }.binaries
         .executable()
 
@@ -32,7 +38,10 @@ kotlin {
             }
         }
         val jsMain by getting {
+            // https://kotlinlang.org/docs/using-packages-from-npm.html
             dependencies {
+                // https://www.npmjs.com/package/sprintf-js
+                implementation(npm("sprintf-js", "1.1.2"))
             }
         }
     }

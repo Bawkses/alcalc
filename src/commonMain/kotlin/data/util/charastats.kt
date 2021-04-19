@@ -2,6 +2,7 @@ package data.util
 
 import data.entity.CharaStats
 import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 /** Calculates the percentage of am enemy character hitting this character. */
 fun CharaStats.enemyHit(
@@ -34,3 +35,8 @@ fun CharaStats.effectiveHealth(
     enemyHit: Float = enemyHit()
 ): Int = (health / (enemyHit / 100))
     .roundToInt()
+
+/** Calculates this character's multiplier to a weapon's reload */
+fun CharaStats.reloadMultiplier(
+    bonusReload: Float = 0f
+) = sqrt(200f / (100f + reload * (1 + bonusReload)))

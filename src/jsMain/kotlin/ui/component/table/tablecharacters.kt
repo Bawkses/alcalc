@@ -4,6 +4,7 @@ import data.entity.Character
 import data.entity.EquipType
 import data.util.effectiveHealth
 import data.util.statMultiplierFor
+import data.util.reloadMultiplier
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.flow.Flow
 import ui.assets.img.faction.icon
@@ -25,8 +26,9 @@ fun RenderContext.tableCharacters(
                 th { +"eHP " }
                 if (showBasicStats) th { +"hp" }
                 if (showBasicStats) th { +"ev" }
-                th { +"acc" }
-                th { +"rel" }
+                if (showBasicStats) th { +"acc" }
+                if (showBasicStats) th { +"rel" }
+                th { +"xRel" }
                 if (showBasicStats) th { +"fire" }
                 th { +"xDD" }
                 th { +"xCL" }
@@ -71,8 +73,12 @@ fun RenderContext.tableCharacters(
                         td { +"${character.effectiveHealth()}" }
                         if (showBasicStats) td { +"${character.health}" }
                         if (showBasicStats) td { +"${character.evasion}" }
-                        td { +"${character.accuracy}" }
-                        td { +"${character.reload}" }
+                        if (showBasicStats) td { +"${character.accuracy}" }
+                        if (showBasicStats) td { +"${character.reload}" }
+                        td {
+                            +character.reloadMultiplier()
+                                .formatStat()
+                        }
                         if (showBasicStats) td { +"${character.firepower}" }
                         td {
                             +maxOf(
@@ -131,6 +137,6 @@ fun RenderContext.tableCharacters(
 }
 
 private fun Float.formatStat() = if (this > 0)
-    "x%.2f".format(this)
+    "x%.3f".format(this)
 else
     "-"

@@ -9,7 +9,15 @@ enum class Faction {
     DRAGON_EMPERY,
     NORTHERN_PARLIAMENT,
     IRIS_LIBRE,
-    VICHYA__DOMINION,
+    VICHYA_DOMINION,
     SARDEGNA_EMPIRE,
-    OTHER
+    OTHER;
+
+    val nameCapitalized = this
+        .name
+        .toLowerCase()
+        .split('_')
+        .asSequence()
+        .map { it.capitalize() }
+        .reduce { acc, s -> "$acc $s" }
 }

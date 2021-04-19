@@ -178,7 +178,7 @@ class CharacterRepository(
         "Iris Libre" -> Faction
             .IRIS_LIBRE
         "Vichya Dominion" -> Faction
-            .VICHYA__DOMINION
+            .VICHYA_DOMINION
         "Sardegna Empire" -> Faction
             .SARDEGNA_EMPIRE
         else -> Faction

@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.Mode.*
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.Mode.DEVELOPMENT
 
 // https://kotlinlang.org/docs/js-project-setup.html
 
@@ -27,7 +27,10 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("dev.fritz2:core:0.9.1")
+                // https://github.com/jwstegemann/fritz2
+                implementation("dev.fritz2:core:0.9.2")
+                implementation("dev.fritz2:components:0.9.2")
+                // https://github.com/Kotlin/kotlinx.serialization
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
                 // https://github.com/LighthouseGames/KmLogging
                 implementation("org.lighthousegames:logging:1.0.0")
@@ -43,6 +46,11 @@ kotlin {
                 // https://www.npmjs.com/package/sprintf-js
                 implementation(npm("sprintf-js", "1.1.2"))
             }
+        }
+
+        all {
+            languageSettings
+                .useExperimentalAnnotation("kotlin.RequiresOptIn")
         }
     }
 }

@@ -4,9 +4,9 @@ package com.github.bawkses.alcalc
 
 import com.github.bawkses.alcalc.data.repository.CharacterRepository
 import com.github.bawkses.alcalc.data.source.azurapi.AzurApiSourceImpl
+import com.github.bawkses.alcalc.ui.component.page.content.pageContent
 import com.github.bawkses.alcalc.ui.component.page.footer.pageFooter
 import com.github.bawkses.alcalc.ui.component.page.header.pageHeader
-import com.github.bawkses.alcalc.ui.component.table.tableCharacters
 import dev.fritz2.components.stackUp
 import dev.fritz2.dom.html.render
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -38,17 +38,7 @@ fun main() {
             spacing { normal }
             items {
                 pageHeader()
-
-                stackUp({
-                    flex { grow { "1" } }
-                    alignItems { center }
-                    paddings { horizontal { normal } }
-                }) {
-                    items {
-                        tableCharacters(charaFlow)
-                    }
-                }
-
+                pageContent(charaFlow)
                 pageFooter()
             }
         }
